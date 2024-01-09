@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "../css/Login.css";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-function LRpage() {
-  const [email, setEmail] = useState('');
+function DoctorLogin() {
+  const [doctorEmail, setDoctorEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = async (userData) => {
     const response = await fetch('http://localhost:5000/doctor-login', {
@@ -18,9 +18,9 @@ function LRpage() {
       body: JSON.stringify(userData)
     });
     if (response.ok) {
-      //navigate('/doctor-home');
+      navigate('/doctor-home');
       alert('Logged in successfully')
-      localStorage.setItem('email', email);
+      localStorage.setItem('doctorEmail', doctorEmail);
     } else {
       alert('Signin failed');
     }
@@ -28,7 +28,7 @@ function LRpage() {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    const userData = { email, password };
+    const userData = { doctorEmail, password };
     handleLogin(userData);
   };
 
@@ -38,7 +38,7 @@ function LRpage() {
         <div className="form-container sign-in-container">
           <h1>Doctor Login</h1>
           <form onSubmit={handleLoginSubmit}>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" placeholder="Email" value={doctorEmail} onChange={(e) => setDoctorEmail(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Link to="/forgotpassword">Forgot your password?</Link>
             <button type="submit" className="signIn">Sign In</button>
@@ -49,4 +49,4 @@ function LRpage() {
   );
 }
 
-export default LRpage;
+export default DoctorLogin;

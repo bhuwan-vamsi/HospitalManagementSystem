@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "../css/Login.css";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-function LRpage() {
+function PatientLogin() {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [patientEmail, setPatientEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleRegister = async (userData) => {
     const response = await fetch('http://localhost:5000/patient-register', {
@@ -19,9 +19,9 @@ function LRpage() {
       body: JSON.stringify(userData)
     });
     if (response.ok) {
-      localStorage.setItem('email', email);
+      localStorage.setItem('patientEmail', patientEmail);
       alert('Registered successfully');
-      //navigate('/patient-home');
+      navigate('/patient-home');
     } else {
       alert('Registration failed');
     }
@@ -37,8 +37,8 @@ function LRpage() {
     });
 
     if (response.ok) {
-      //navigate('/patient-home');
-      localStorage.setItem('email', email);
+      navigate('/patient-home');
+      localStorage.setItem('patientEmail', patientEmail);
       alert('Logged in successfully')
     } else {
       alert('Signin failed');
@@ -55,13 +55,13 @@ function LRpage() {
 
     const handleRegisterSubmit = (e) => {
       e.preventDefault();
-      const userData = { name, email, password };
+      const userData = { name, patientEmail, password };
       handleRegister(userData);
     };
   
     const handleLoginSubmit = (e) => {
       e.preventDefault();
-      const userData = { email, password };
+      const userData = { patientEmail, password };
       handleLogin(userData);
     };
 
@@ -72,7 +72,7 @@ function LRpage() {
           <form onSubmit={handleRegisterSubmit}>
             <h1>Create Account</h1>
             <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" placeholder="Email" value={patientEmail} onChange={(e) => setPatientEmail(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button type="submit" className="signUp">Sign Up</button>
           </form>
@@ -80,7 +80,7 @@ function LRpage() {
         <div className="form-container sign-in-container">
           <form onSubmit={handleLoginSubmit}>
             <h1>Sign In</h1>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" placeholder="Email" value={patientEmail} onChange={(e) => setPatientEmail(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Link to="/forgotpassword">Forgot your password?</Link>
             <button type="submit" className="signIn">Sign In</button>
@@ -105,4 +105,4 @@ function LRpage() {
   );
 }
 
-export default LRpage;
+export default PatientLogin;
